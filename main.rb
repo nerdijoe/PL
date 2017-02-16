@@ -1,4 +1,5 @@
-# main
+require 'csv'
+require 'io/console'
 
 class Car
   def initialize(**input)
