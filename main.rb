@@ -31,9 +31,9 @@ class Parking
         # get the total number of slots
         num_slots = argv_arr[1].to_i
         @slots = Array.new(num_slots)
+        byebug
 
       when "park"
-        puts "park it"
         # have to assign to the nearest to the entry
         if @@num_cars == @slots.size
           puts "Sorry, parking lot is full"
@@ -50,8 +50,24 @@ class Parking
 
       when "leave"
         puts "leave it"
-        byebug
+        if @slots.size == 0
+          puts "Sorry, the parking lot is empty"
+        else
+          index = argv_arr[1].to_i - 1
+          @slots[index] = nil
+          byebug
+        end
+
+
       when "status"
+        if @slots.size == 0
+          puts "Parking lot is empty"
+        else
+          puts "Slot No.    Registration No   Colour"
+          @slots.each_with_index do |slot, i|
+            puts "#{i+1}         #{slot.reg_num}      #{slot.colour}" if slot
+          end
+        end
 
       when "registration_numbers_for_cars_with_colour"
 
