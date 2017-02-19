@@ -122,6 +122,9 @@ class Parking
           end
         end
 
+      else
+        puts "Wrong command"
+
     end # end of case action
 
   end # end of def process_input
