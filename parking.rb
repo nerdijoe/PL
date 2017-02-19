@@ -2,15 +2,15 @@
 class Parking
   attr_reader :slots
 
-  @@num_cars = 0
   def initialize(**input)
     # @num_slots = input.fetch(:num_slots)
     # @file = input.fetch(:file)
     @slots = nil
+    @num_cars = 0
   end
 
-  def self.num_cars
-    @@num_cars
+  def num_cars
+    @num_cars
   end
 
   def process_input(argv_arr)
@@ -31,13 +31,13 @@ class Parking
       when "park"
         # park [car registration number] [colour]
         # have to assign to the nearest to the entry
-        if @@num_cars == @slots.size
+        if @num_cars == @slots.size
           puts "Sorry, parking lot is full"
         else
           @slots.each_with_index do |slot, i|
             if !slot
               @slots[i] = Car.new(reg_num: argv_arr[1], colour: argv_arr[2])
-              @@num_cars += 1
+              @num_cars += 1
               puts "Allocated slot number: #{i+1}"
               #break from the loop after the car has been assigned to nearest slot
               break
@@ -47,18 +47,18 @@ class Parking
 
       when "leave"
         # leave [parking slot number]
-        if @@num_cars == 0
+        if @num_cars == 0
           puts "Sorry, the parking lot is empty"
         else
           index = argv_arr[1].to_i - 1
           @slots[index] = nil
-          @@num_cars -= 1
+          @num_cars -= 1
           puts "Slot number #{index + 1} is free"
         end
 
       when "status"
         # status
-        if @@num_cars == 0
+        if @num_cars == 0
           puts "Parking lot is empty"
         else
           puts "Slot No.    Registration No   Colour"
@@ -68,7 +68,7 @@ class Parking
         end
 
       when "registration_numbers_for_cars_with_colour"
-        if @@num_cars == 0
+        if @num_cars == 0
           puts "Parking lot is empty"
         else
           match = ""
@@ -84,7 +84,7 @@ class Parking
           puts match
         end
       when "slot_numbers_for_cars_with_colour"
-        if @@num_cars == 0
+        if @num_cars == 0
           puts "Parking lot is empty"
         else
           match = ""
@@ -101,7 +101,7 @@ class Parking
         end
 
       when "slot_number_for_registration_number"
-        if @@num_cars == 0
+        if @num_cars == 0
           puts "Parking lot is empty"
         else
           match = ""
